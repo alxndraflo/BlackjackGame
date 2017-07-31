@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CodingChallenges.CardGame;
 
-namespace CodingChallenges
+namespace CodingChallenges.CardGame
 {
     class CardsMain
     {
@@ -39,7 +32,6 @@ namespace CodingChallenges
             } while (!quit);
 
             Console.WriteLine("Quitting game program...");
-
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CodingChallenges.CardGame
 
         public readonly CardType suit;
         public readonly CardRank rank;
-
+        
         public Card(CardRank rankIn, CardType suitIn)
         {
             suit = suitIn;
@@ -33,19 +33,19 @@ namespace CodingChallenges.CardGame
         }
 
         // Assigns card value based on suit. Returns list of ints based on type of card.
-        public List<int> GetCardValue()
-        {
-            switch (rank)
-            {
-                case CardRank.Jack:
-                case CardRank.Queen:
-                case CardRank.King:
-                    return new List<int> { 10 };
-                case CardRank.Ace:
-                    return new List<int> { 1 }; // TODO: ***Add 11 back in***
-                default:
-                    return new List<int> { (int)rank };
-            }
-        }
+        //public List<int> GetCardValue()
+        //{
+        //    switch (rank)
+        //    {
+        //        case CardRank.Jack :
+        //        case CardRank.Queen :
+        //        case CardRank.King :
+        //            return new List<int> {10};
+        //        case CardRank.Ace :
+        //            return new List<int> {1}; // TODO: ***Add 11 back in***
+        //        default :
+        //            return new List<int> {(int) rank};
+        //    }
+        //}
     }
 }
