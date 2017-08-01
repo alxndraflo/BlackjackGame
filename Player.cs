@@ -12,7 +12,7 @@ namespace CodingChallenges.CardGame
         private List<Card> _handOfCards;
 
         // Adds a card to player or dealer's hand.
-        public void AddCardToHand(Card card)
+        public List<Card> AddCardToHand(Card card)
         {
             if (_handOfCards == null)
             {
@@ -20,7 +20,22 @@ namespace CodingChallenges.CardGame
             }
 
             _handOfCards.Add(card);
+
+            return _handOfCards;
         }
+
+        public List<Card> GetHandOfCards()
+        {
+            List<Card> handOfCards = new List<Card>(_handOfCards);
+            return handOfCards;
+        }
+
+        //public int GetHandValue()
+        //{
+        //    var handValue = ScoreHand
+        //    return handValue;
+        //}
+
 
         // TODO: Complete logic for method
         public bool IsWinner()

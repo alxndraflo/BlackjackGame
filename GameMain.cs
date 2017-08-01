@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CodingChallenges.CardGame
 {
@@ -17,7 +18,7 @@ namespace CodingChallenges.CardGame
 
                 if (input == "Y" || input == "y")
                 {
-                    GameInterface.Instance.StartNewGame();
+                    BlackjackGame.Instance.StartNewGame();
                 }
                 else if (input == "N" || input == "n")
                 {
