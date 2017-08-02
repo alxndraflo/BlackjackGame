@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodingChallenges.CardGame
 {
-    public sealed class BlackjackGame : GameRules
+    public class BlackjackGame : GameRules
     {
         private const int NumCardsPerPlayer = 2;
         private readonly CardDeck _deckOfCards;
         private readonly Dealer _dealer;
-
         private int _numPlayers;
         private List<Player> _players;
 
-        static BlackjackGame()
-        {
-        }
+        private static BlackjackGame _instance;
 
-        public static BlackjackGame Instance { get; } = new BlackjackGame();
+        // Ensures that only one instance of BlackjackGame is created.
+        public static BlackjackGame Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new BlackjackGame();
+                }
+
+                return _instance;
+            }
+        }
 
         private BlackjackGame()
         {
             _deckOfCards = new CardDeck();
-            _dealer = new Dealer();
+            _dealer = new Dealer(_deckOfCards);
         }
 
         // Initializes card game. Uses created deck, shuffles cards, and starts game.
@@ -34,13 +39,15 @@ namespace CodingChallenges.CardGame
             Console.WriteLine("Shuffling cards...\n");
 
             _deckOfCards.Shuffle();
+
+            // Print shuffled deck of cards (for debugging purposes).
             //Console.WriteLine(_deckOfCards.ToString());
             //Console.WriteLine();
 
             PlayGame();
         }
 
-        // Acts as user interface to game of cards.
+        // Starts playing game. 
         private void PlayGame()
         {
             Console.Write("Please enter number of players: ");
@@ -54,12 +61,9 @@ namespace CodingChallenges.CardGame
             DealInitialHand();
 
             var allPlayerHandVals = AskHitStand();
-            var dealerHandVal = PlayDealer();
+            var dealerHandVal = _dealer.PlayDealer();
 
             DetermineWinners(dealerHandVal, allPlayerHandVals);
-
-            Console.WriteLine();
-
         }
 
         // Takes dealerHandValue and list of allPlayerHandValues as parameter. Prints winners.
@@ -189,50 +193,12 @@ namespace CodingChallenges.CardGame
                         Console.WriteLine("Invalid input. Please try again.");
                     }
                 }
+
                 playersHandValues.Add(handValue);
                 playerNumber++;
             }
+
             return playersHandValues;
-        }
-
-
-        // Plays dealer's game. Hits on soft 17 (with Ace). Plays until bust or stand on > 17.
-        private int PlayDealer()
-        {
-            var dealerHand = _dealer.GetHandOfCards();
-
-            Console.WriteLine($"DEALER \n");
-            Console.WriteLine("Dealer Hand:");
-            Console.Write(_dealer.ToString());
-            var handValue = ScoreHand(dealerHand);
-            Console.Write($"Hand value is: {handValue}\n\n");
-
-            while (handValue > 0 && handValue < 17)
-            {
-                Console.WriteLine("Dealer hits...\n");
-                dealerHand = _dealer.AddCardToHand(_deckOfCards.DealCard());
-
-                Console.WriteLine("New Dealer Hand:");
-                Console.Write(_dealer.ToString());
-
-                handValue = ScoreHand(dealerHand);
-                Console.Write($"Hand value is: {handValue}\n\n");
-            }
-
-            if (handValue == 21)
-            {
-                Console.WriteLine("Blackjack!!\n");
-            }
-            if (handValue > 21)
-            {
-                Console.WriteLine("Dealer busts! \n");
-            }
-            if (handValue > 16 && handValue < 21)
-            {
-                Console.WriteLine("Dealer stands.\n");
-            }
-
-            return handValue;
         }
     }
 }

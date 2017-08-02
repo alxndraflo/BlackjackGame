@@ -1,126 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodingChallenges.CardGame
 {
     public class Dealer : Player
     {
         private List<Card> _handOfCards;
+        private readonly CardDeck _deckOfCards;
 
-        public Dealer()
+        public Dealer(CardDeck deckOfCardsIn)
         {
+            _deckOfCards = deckOfCardsIn;
         }
 
-        //private void PrintDealerHand()
-        //{
-        //    foreach (var c in _handOfCards)
-        //    {
-        //        Console.WriteLine($"{c.rank} of {c.suit}");
-        //    }
-        //    Console.WriteLine();
-        //}
+        // Plays dealer's game. Hits on 17. Plays until bust or stand on > 17.
+        public int PlayDealer()
+        {
+            _handOfCards = GetHandOfCards();
 
+            Console.WriteLine($"DEALER \n");
+            Console.WriteLine("Dealer Hand:");
+            Console.Write(_handOfCards.ToString());
+            var handValue = BlackjackGame.Instance.ScoreHand(_handOfCards);
+            Console.Write($"Hand value is: {handValue}\n\n");
 
-        //private int GetDealerHandValue()
-        //{
-        //    List<int> cardValues = new List<int>();
-        //    int dealerHandValue = 0;
+            while (handValue > 0 && handValue < 17)
+            {
+                Console.WriteLine("Dealer hits...\n");
+                _handOfCards = AddCardToHand(_deckOfCards.DealCard());
 
-        //    var index = 0;
-        //    foreach (var card in _handOfCards)
-        //    {
-        //        List<int> singleCardValue = card.GetCardValue();
+                Console.WriteLine("New Dealer Hand:");
+                Console.Write(_handOfCards.ToString());
 
-        //        if (singleCardValue != null && singleCardValue.Count != 0)
-        //        {
-        //            cardValues.Add(singleCardValue[index]);
-        //        }
-        //    }
+                handValue = BlackjackGame.Instance.ScoreHand(_handOfCards);
+                Console.Write($"Hand value is: {handValue}\n\n");
+            }
 
-        //    foreach (var val in cardValues)
-        //    {
-        //        dealerHandValue += val;
-        //    }
+            if (handValue == 21)
+            {
+                Console.WriteLine("Blackjack!!\n");
+            }
 
-        //    return dealerHandValue;
-        //}
+            if (handValue > 21)
+            {
+                Console.WriteLine("Dealer busts! \n");
+            }
 
+            if (handValue > 16 && handValue < 21)
+            {
+                Console.WriteLine("Dealer stands.\n");
+            }
 
-
-        //// Prints hand values & ask if hit/stand. If blackjack, break. Gives card and prints value until bust, or player stands.
-        //public override void CheckHitOrStand()
-        //{
-        //    var playerNumber = 1;
-
-        //    foreach (var p in _players)
-        //    {
-        //        var hit = true;
-
-        //        Console.WriteLine($"PLAYER NUMBER {playerNumber}\n");
-        //        Console.WriteLine("Player Hand:");
-        //        Console.Write(p.ToString());
-
-        //        Console.WriteLine("Getting card values...");
-        //        var playerHandValue = p.GetHandValue();
-        //        Console.Write($"Hand value is: {playerHandValue}\n\n");
-
-        //        if (playerHandValue == 21)
-        //        {
-        //            Console.WriteLine("Blackjack!! You win. Next player.");
-        //            continue;
-        //        }
-
-        //        while (hit)
-        //        {
-        //            Console.Write("Do you want to hit or stand (H/S)? \nChoice: ");
-        //            var input = Console.ReadLine();
-
-        //            if (input == "H" || input == "h")
-        //            {
-        //                Console.WriteLine("Here is another card...\n");
-        //                p.AddCardToHand(_deckOfCards.DealCard());
-        //                Console.WriteLine("New Player Hand:");
-        //                Console.Write(p.ToString());
-
-        //                playerHandValue = p.GetHandValue();
-        //                Console.Write($"Hand value is: {playerHandValue}\n\n");
-
-        //                if (playerHandValue > 21)
-        //                {
-        //                    Console.WriteLine("Bust!! You lose. Next player.\n");
-        //                    hit = false;
-        //                }
-        //            }
-        //            else if (input == "S" || input == "s")
-        //            {
-        //                Console.WriteLine("Ok, stand. Next player.\n");
-        //                hit = false;
-        //            }
-        //        }
-        //        playerNumber++;
-        //    }
-        //}
+            return handValue;
+        }
     }
-
 }
-
-
-//// Creates dealer's initial hand. ***Duplicate code to function in Player class.***
-//private void MakeDealerHand()
-//{
-//    if (dealerHand == null)
-//    {
-//        dealerHand = new List<Card>();
-//    }
-
-//    dealerHand.Add(deckOfCards.DealCard());
-//}
-
-
-//foreach (var c in playerHand)
-//{
-//    Console.Write($"{c.rank} of {c.suit}\n");
-//}
