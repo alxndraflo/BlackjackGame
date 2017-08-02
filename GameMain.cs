@@ -15,6 +15,7 @@ namespace CodingChallenges.CardGame
             {
                 Console.Write("Would you like to start a new game (Y/N)?\nChoice: ");
                 var input = Console.ReadLine();
+                Console.WriteLine();
 
                 if (input == "Y" || input == "y")
                 {

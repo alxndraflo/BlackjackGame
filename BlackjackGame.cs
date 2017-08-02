@@ -34,8 +34,8 @@ namespace CodingChallenges.CardGame
             Console.WriteLine("Shuffling cards...\n");
 
             _deckOfCards.Shuffle();
-            Console.WriteLine(_deckOfCards.ToString());
-            Console.WriteLine();
+            //Console.WriteLine(_deckOfCards.ToString());
+            //Console.WriteLine();
 
             PlayGame();
         }
@@ -45,6 +45,7 @@ namespace CodingChallenges.CardGame
         {
             Console.Write("Please enter number of players: ");
             var playersIn = Console.ReadLine();
+            Console.WriteLine();
             int.TryParse(playersIn, out _numPlayers);
 
             AddPlayers();
@@ -59,10 +60,8 @@ namespace CodingChallenges.CardGame
 
             Console.WriteLine();
 
-            // TODO: Need DetermineWinners() method. 
         }
 
-        // TODO: This method...
         // Takes dealerHandValue and list of allPlayerHandValues as parameter. Prints winners.
         private void DetermineWinners(int dealerHandValIn, List<int> allPlayerHandValsIn)
         {
@@ -74,28 +73,31 @@ namespace CodingChallenges.CardGame
             {
                 if (value > dealerHandValue && value <= 21)
                 {
-                    Console.WriteLine($"Congratulations, player {playerCount} wins! :)\n");
+                    Console.WriteLine($"Player {playerCount}: Congratulations, you win!! :)\n");
                 }
+
                 if (value < dealerHandValue && dealerHandValue <= 21)
                 {
-                    Console.WriteLine($"Sorry Player {playerCount}, you lose. Dealer wins :(\n");
+                    Console.WriteLine($"Player {playerCount}: Sorry you lose. :(\n");
                 }
+
                 if (value == dealerHandValue && value < 21)
                 {
                     Console.WriteLine($"Player {playerCount}: Push with dealer.\n");
                 }
+
                 if (value > 21)
                 {
-                    Console.WriteLine($"Bust!! Player {playerCount} loses.\n");
+                    Console.WriteLine($"Player {playerCount}: Bust! You lose. :(\n");
+                }
+
+                if (dealerHandValue > 21)
+                {
+                    Console.WriteLine("Dealer: Bust! Dealer loses!\n");
                 }
 
                 playerCount++;
             }
-
-            //if (dealerHandValue > 21)
-            //{
-            //    Console.WriteLine("Dealer busted! Dealer loses!\n");
-            //}
         }
 
         // Creates user-specified number of players and adds to '_players' list.
@@ -134,11 +136,11 @@ namespace CodingChallenges.CardGame
                 var hit = true;
                 var playerHand = player.GetHandOfCards();
 
-                Console.WriteLine($"PLAYER NUMBER {playerNumber}\n");
+                Console.WriteLine($"PLAYER {playerNumber}:\n");
                 Console.WriteLine("Player Hand:");
                 Console.Write(player.ToString());
 
-                Console.WriteLine("Getting card values...");
+                Console.WriteLine("Getting card values...\n");
                 var handValue = ScoreHand(playerHand);
                 Console.Write($"Hand value is: {handValue}\n\n");
 
@@ -153,6 +155,7 @@ namespace CodingChallenges.CardGame
                 {
                     Console.Write("Do you want to hit or stand (H/S)? \nChoice: ");
                     var input = Console.ReadLine();
+                    Console.WriteLine();
 
                     if (input == "H" || input == "h")
                     {
@@ -166,7 +169,7 @@ namespace CodingChallenges.CardGame
 
                         if (handValue > 21)
                         {
-                            Console.WriteLine("Bust!! You lose. Next player.\n");
+                            Console.WriteLine("Bust!! Next player.\n");
                             hit = false;
                         }
 
@@ -198,7 +201,7 @@ namespace CodingChallenges.CardGame
         {
             var dealerHand = _dealer.GetHandOfCards();
 
-            Console.WriteLine($"DEALER: \n");
+            Console.WriteLine($"DEALER \n");
             Console.WriteLine("Dealer Hand:");
             Console.Write(_dealer.ToString());
             var handValue = ScoreHand(dealerHand);
@@ -222,11 +225,11 @@ namespace CodingChallenges.CardGame
             }
             if (handValue > 21)
             {
-                Console.WriteLine("Dealer busts! Dealer loses! \n");
+                Console.WriteLine("Dealer busts! \n");
             }
             if (handValue > 16 && handValue < 21)
             {
-                Console.WriteLine("Dealer stands.");
+                Console.WriteLine("Dealer stands.\n");
             }
 
             return handValue;
