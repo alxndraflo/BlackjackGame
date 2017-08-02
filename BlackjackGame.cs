@@ -81,7 +81,7 @@ namespace CodingChallenges.CardGame
                     Console.WriteLine($"Player {playerCount}: Sorry you lose. :(\n");
                 }
 
-                if (value == dealerHandValue && value < 21)
+                if (value == dealerHandValue && value <= 21)
                 {
                     Console.WriteLine($"Player {playerCount}: Push with dealer.\n");
                 }
@@ -91,12 +91,12 @@ namespace CodingChallenges.CardGame
                     Console.WriteLine($"Player {playerCount}: Bust! You lose. :(\n");
                 }
 
-                if (dealerHandValue > 21)
-                {
-                    Console.WriteLine("Dealer: Bust! Dealer loses!\n");
-                }
-
                 playerCount++;
+            }
+
+            if (dealerHandValue > 21)
+            {
+                Console.WriteLine("Dealer: Bust! Dealer loses!\n");
             }
         }
 
@@ -146,7 +146,7 @@ namespace CodingChallenges.CardGame
 
                 if (handValue == 21)
                 {
-                    Console.WriteLine("Blackjack!! Next player.");
+                    Console.WriteLine("Blackjack!! Next player.\n");
                     playerNumber++;
                     continue;
                 }
@@ -221,7 +221,7 @@ namespace CodingChallenges.CardGame
 
             if (handValue == 21)
             {
-                Console.WriteLine("Blackjack!!");
+                Console.WriteLine("Blackjack!!\n");
             }
             if (handValue > 21)
             {
